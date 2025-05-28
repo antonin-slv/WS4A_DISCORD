@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+    <persistence-unit name="default">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <!--  Propriétés standard JPA  -->
+            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/projet_discord"/>
+            <property name="jakarta.persistence.jdbc.user" value="web_user2"/>
+            <property name="jakarta.persistence.jdbc.password" value="motdepasse"/>
+            <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
+            <!--
+                        none means do not do anything extra!
+                        create the tables for the entities and check existence of tables before creation
+                        drop the tables for the entities, i.e. clean up after tests for example
+                        drop-and-create means get rid of what was there and start from scratch
+                         -->
+            <!--  Propriétés spécifiques Hibernate  -->
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+        </properties>
+    </persistence-unit>
+</persistence>
