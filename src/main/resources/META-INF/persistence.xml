@@ -9,7 +9,7 @@
             <!--  Propriétés standard JPA  -->
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/discord_ws"/>
-            <property name="jakarta.persistence.jdbc.user" value="discord_ws"/>
+            <property name="jakarta.persistence.jdbc.user" value="discord_app"/>
             <property name="jakarta.persistence.jdbc.password" value="motdepasse"/>
             <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
             <!--
