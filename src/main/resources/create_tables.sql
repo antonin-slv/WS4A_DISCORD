@@ -31,7 +31,7 @@ CREATE TABLE Message
 (
     id_msg             SERIAL PRIMARY KEY,
     content            TEXT NOT NULL,
-    send_date          DATE,
+    send_date          timestamp,
     id_sender  INTEGER,
     id_receiver            INTEGER,
     id_channel          INTEGER,
