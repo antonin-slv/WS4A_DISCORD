@@ -26,8 +26,8 @@ public class ControllerSubject extends HttpServlet {
         subjectDTO.setId(1);
         subjectDTO.setName("Mathématiques");
         List<ChannelLightDTO> listChannelLightDTO = new ArrayList<>();
-        ChannelLightDTO channel1 = new ChannelLightDTO(1, "Algebra");
-        ChannelLightDTO channel2 = new ChannelLightDTO(2, "Geometry");
+        ChannelLightDTO channel1 = new ChannelLightDTO(1, "Algebra",1);
+        ChannelLightDTO channel2 = new ChannelLightDTO(2, "Geometry",1);
         listChannelLightDTO.add(channel1);
         listChannelLightDTO.add(channel2);
         subjectDTO.setChannels(listChannelLightDTO);

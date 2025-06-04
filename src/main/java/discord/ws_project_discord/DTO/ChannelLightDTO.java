@@ -12,4 +12,5 @@ public class ChannelLightDTO  implements java.io.Serializable {
 
     Integer id;
     String name;
+    Integer subjectId;
 }
