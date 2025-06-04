@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 public class ChannelDTO implements java.io.Serializable {
-    String id;
+    Integer id;
     String name;
 
     List<MessageDTO> messages;
