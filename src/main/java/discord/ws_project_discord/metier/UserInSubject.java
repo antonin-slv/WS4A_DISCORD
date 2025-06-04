@@ -19,13 +19,13 @@ public class UserInSubject {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_user", nullable = false)
-    private User idUser;
+    private User user;
 
     @MapsId("idSub")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_sub", nullable = false)
-    private Subject idSub;
+    private Subject subject;
 
     @NotNull
     @Column(name = "is_admin", nullable = false)

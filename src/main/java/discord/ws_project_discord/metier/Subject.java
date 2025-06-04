@@ -29,7 +29,7 @@ public class Subject implements Serializable {
     private Set<Channel> channels = new LinkedHashSet<>();
 
     @OneToMany(
-            mappedBy = "idSub",
+            mappedBy = "subject",
             fetch = FetchType.EAGER)
     private Set<UserInSubject> userInSubjects = new LinkedHashSet<>();
 

@@ -18,13 +18,13 @@ public class ReactTo {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_user", nullable = false)
-    private User idUser;
+    private User user;
 
     @MapsId("idMsg")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_msg", nullable = false)
-    private Message idMsg;
+    private Message msg;
 
     @Column(name = "reaction", length = Integer.MAX_VALUE)
     private String reaction;

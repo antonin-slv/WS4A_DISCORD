@@ -15,4 +15,5 @@ import java.io.Serializable;
 public class UserLightDTO implements Serializable {
     Integer id;
     String login;
+    Boolean isAdmin;
 }

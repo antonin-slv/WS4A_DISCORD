@@ -39,7 +39,7 @@ public class Message implements Serializable {
     private User idSender;
 
     //reactions
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "idMsg", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "msg", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<ReactTo> idReactTo;
 
