@@ -13,5 +13,5 @@ public class SubjectDTO implements java.io.Serializable {
 
     String name;
     List<ChannelLightDTO> channels;
-    List<UserLightDTO> users;
+    List<UserInSubjectDTO> users;
 }

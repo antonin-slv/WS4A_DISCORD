@@ -4,7 +4,7 @@ import discord.ws_project_discord.metier.Subject;
 
 import java.util.List;
 
-public class SubjetDAO {
+public class SubjectDAO {
     private static final GenericDBDAO<Subject,Integer> genDAO = new GenericDBDAO<>(Subject.class);
 
     public static Subject find(Integer id) {

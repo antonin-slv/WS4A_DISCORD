@@ -9,6 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -32,6 +33,5 @@ public class Channel implements Serializable {
     private Subject subject;
 
     @OneToMany(mappedBy = "idChannel")
-    private Set<Message> messages = new LinkedHashSet<>();
-
+    private List<Message> messages;
 }

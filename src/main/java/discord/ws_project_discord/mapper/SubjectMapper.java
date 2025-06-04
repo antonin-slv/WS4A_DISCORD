@@ -1,4 +1,4 @@
-package discord.ws_project_discord.Mapper;
+package discord.ws_project_discord.mapper;
 
 import discord.ws_project_discord.DTO.SubjectDTO;
 import discord.ws_project_discord.metier.Subject;
@@ -28,5 +28,27 @@ public class SubjectMapper {
         //dto.setChannels(ChannelMapper.toDTOSet(suj.getChannels()));
         //dto.setUserInSubjects(UserInSubjectMapper.toDTOSet(suj.getUserInSubjects()));
         return dto;
+    }
+
+    public static Subject toEntity(SubjectDTO dto) {
+        if (dto == null) {
+            return null;
+        }
+        Subject suj = new Subject();
+        suj.setId(dto.getId());
+        suj.setSubject(dto.getName());
+        suj.setChannels(
+                dto.getChannels()
+                        .stream()
+                        .map(ChannelMapper::toEntity)
+                        .toList()
+        );
+        suj.setUserInSubjects(
+                dto.getUsers()
+                        .stream()
+                        .map(UserInSubjectMapper::toEntity)
+                        .toList()
+        );
+        return suj;
     }
 }

@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -26,11 +27,11 @@ public class Subject implements Serializable {
     @OneToMany(
             mappedBy = "subject",
             fetch = FetchType.EAGER)
-    private Set<Channel> channels = new LinkedHashSet<>();
+    private List<Channel> channels;
 
     @OneToMany(
             mappedBy = "subject",
             fetch = FetchType.EAGER)
-    private Set<UserInSubject> userInSubjects = new LinkedHashSet<>();
+    private List<UserInSubject> userInSubjects;
 
 }

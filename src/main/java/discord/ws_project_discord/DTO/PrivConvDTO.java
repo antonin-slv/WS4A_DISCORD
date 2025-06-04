@@ -9,6 +9,6 @@ import java.util.List;
 @Getter
 @Setter
 public class PrivConvDTO implements Serializable {
-    UserLightDTO other;
+    UserDTO other;
     List<MessageDTO> messages;
 }

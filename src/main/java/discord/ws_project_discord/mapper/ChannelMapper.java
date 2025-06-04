@@ -1,4 +1,4 @@
-package discord.ws_project_discord.Mapper;
+package discord.ws_project_discord.mapper;
 
 import discord.ws_project_discord.DTO.ChannelLightDTO;
 import discord.ws_project_discord.metier.Channel;
