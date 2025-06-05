@@ -2,6 +2,7 @@ package discord.ws_project_discord;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import discord.ws_project_discord.DAO.ChannelDAO;
 import discord.ws_project_discord.DAO.SubjectDAO;
 import discord.ws_project_discord.DTO.ChannelLightDTO;
@@ -46,7 +47,7 @@ public class HelloResource extends HttpServlet {
         }
 
         Subject sujet = SubjectDAO.find(2);
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
         //auto mapper to convert the subject to a DTO
 
         try {

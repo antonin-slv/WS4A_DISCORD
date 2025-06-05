@@ -7,7 +7,16 @@ import discord.ws_project_discord.DTO.ChannelLightDTO;
 import discord.ws_project_discord.mapper.ChannelMapper;
 import discord.ws_project_discord.metier.Channel;
 
+import java.util.List;
+
 public class ChannelService {
+
+    public static List<Integer> getAllChannelIds() {
+        return ChannelDAO.findAll()
+                .stream()
+                .map(Channel::getId)
+                .toList();
+    }
 
     public static ChannelDTO getChannel(int id) {
         Channel chan = ChannelDAO.find(id);

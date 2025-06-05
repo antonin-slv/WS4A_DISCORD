@@ -27,4 +27,21 @@ public class MessageMapper {
         );
         return dto;
     }
+
+    public static Message toEntity(MessageDTO messageDTO) {
+        if (messageDTO == null) {
+            return null;
+        }
+        Message msg = new Message();
+        msg.setId(messageDTO.getId());
+        msg.setContent(messageDTO.getContent());
+        msg.setSendDate(messageDTO.getSendDate());
+        msg.setIdSender(messageDTO.getAuthorId());
+
+        msg.setIdChannel(messageDTO.getChannelId());
+        msg.setIdReceiver(messageDTO.getReceiverId());
+
+        msg.setRespondsToId(messageDTO.getRespondsToId());
+        return msg;
+    }
 }

@@ -3,7 +3,7 @@ package discord.ws_project_discord.DTO;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -14,7 +14,7 @@ public class MessageDTO implements java.io.Serializable {
     Integer authorId;
     String authorName;
     String content;
-    LocalDate sendDate;
+    LocalDateTime sendDate;
 
     Integer channelId;
     Integer receiverId;

@@ -8,7 +8,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -17,6 +17,7 @@ import java.util.List;
 @Table(name = "message")
 public class Message implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_msg", nullable = false)
     private Integer id;
 
@@ -26,7 +27,7 @@ public class Message implements Serializable {
 
     @NotNull
     @Column(name = "send_date", nullable = false)
-    private LocalDate sendDate;
+    private LocalDateTime sendDate;
 
     @Column(name = "id_channel")
     private Integer idChannel;
@@ -36,9 +37,12 @@ public class Message implements Serializable {
     @JoinColumn(name = "id_channel", updatable = false, insertable = false)
     private Channel channel;
 
+    @Column(name = "id_sender")
+    private Integer idSender;
+
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_sender", nullable = false,insertable = false, updatable = false)
+    @JoinColumn(name = "id_sender", nullable = false, insertable = false, updatable = false)
     private User sender;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "msg", cascade = CascadeType.ALL)
