@@ -5,6 +5,8 @@ import discord.ws_project_discord.DTO.ChannelLightDTO;
 import discord.ws_project_discord.metier.Channel;
 import discord.ws_project_discord.metier.Subject;
 
+import java.util.stream.Collectors;
+
 public class ChannelMapper {
 
     public static ChannelLightDTO toLightDTO(Channel chan) {
@@ -24,7 +26,7 @@ public class ChannelMapper {
         ChannelDTO dto = new ChannelDTO();
         dto.setId(chan.getId());
         dto.setName(chan.getChannel());
-        //TODO messga
+        dto.setMessages(chan.getMessages().stream().map(MessageMapper::toDTO).collect(Collectors.toList()));
         return dto;
     }
 

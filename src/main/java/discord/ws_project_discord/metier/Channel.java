@@ -30,6 +30,6 @@ public class Channel implements Serializable {
     @JoinColumn(name = "subject_id", nullable = false)
     private Subject subject;
 
-    @OneToMany(mappedBy = "idChannel")
+    @OneToMany(mappedBy = "channel",fetch = FetchType.LAZY)
     private List<Message> messages;
 }

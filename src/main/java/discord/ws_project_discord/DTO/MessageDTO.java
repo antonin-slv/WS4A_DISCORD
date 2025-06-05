@@ -10,12 +10,15 @@ import java.util.List;
 @Setter
 public class MessageDTO implements java.io.Serializable {
     Integer id;
-    Integer respondsToId;
-    String content;
-    String authorName;
+
     Integer authorId;
+    String authorName;
+    String content;
     LocalDate sendDate;
 
-    List<ReactionDTO> reactions;
+    Integer channelId;
+    Integer receiverId;
 
+    Integer respondsToId;
+    List<ReactionLightDTO> reactions;
 }

@@ -20,6 +20,9 @@ public class ReactTo {
     @JoinColumn(name = "id_user", nullable = false)
     private User user;
 
+    @Column(name = "id_user")
+    private Integer idUser;
+
     @MapsId("idMsg")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)

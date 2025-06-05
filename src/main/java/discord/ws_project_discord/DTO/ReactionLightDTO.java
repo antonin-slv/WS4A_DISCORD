@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ReactionDTO implements java.io.Serializable {
+public class ReactionLightDTO implements java.io.Serializable {
     String emoji;
     Integer userId;
 }
