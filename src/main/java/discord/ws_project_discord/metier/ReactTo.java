@@ -17,7 +17,7 @@ public class ReactTo {
     @MapsId("idUser")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_user", nullable = false)
+    @JoinColumn(name = "id_user", nullable = false, insertable = false, updatable = false)
     private User user;
 
     @Column(name = "id_user")
@@ -26,7 +26,7 @@ public class ReactTo {
     @MapsId("idMsg")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_msg", nullable = false)
+    @JoinColumn(name = "id_msg", nullable = false, insertable = false, updatable = false)
     private Message msg;
 
     @Column(name = "reaction", length = Integer.MAX_VALUE)

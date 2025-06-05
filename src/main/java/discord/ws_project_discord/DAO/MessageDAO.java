@@ -1,10 +1,7 @@
 package discord.ws_project_discord.DAO;
 
-import discord.ws_project_discord.metier.Channel;
 import discord.ws_project_discord.metier.Message;
-import discord.ws_project_discord.metier.User;
 import jakarta.persistence.EntityManager;
-
 import java.util.List;
 
 public class MessageDAO {
@@ -14,8 +11,16 @@ public class MessageDAO {
         return genDAO.find(id);
     }
 
-    public static List<Message> findByChannel(Channel channel) {
-        return genDAO.findByField("channel", channel);
+    public static List<Message> findByChannelId(Integer channelID) {
+        try(EntityManager em = GenericDBDAO.getEM()) {
+            String sql = "SELECT m FROM Message m WHERE m.channel.id = :channelID";
+            return em.createQuery(sql, Message.class)
+                    .setParameter("channelID", channelID)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error retrieving messages for channel ID: " + channelID, e);
+        }
     }
 
     public static List<Message> findDM(Integer idUser1, Integer idUser2) {
@@ -26,10 +31,10 @@ public class MessageDAO {
         try (EntityManager em = GenericDBDAO.getEM()) {
             String sql =
                     """
-                                SELECT m FROM Message m
-                                WHERE (m.sender.id = :user1 AND m.idReceiver = :user2)
-                                OR (m.sender.id = :user2 AND m.idReceiver = :user1)
-                            """;
+                        SELECT m FROM Message m
+                        WHERE (m.sender.id = :user1 AND m.idReceiver = :user2)
+                        OR (m.sender.id = :user2 AND m.idReceiver = :user1)
+                    """;
             return em.createQuery(sql, Message.class)
                     .setParameter("user1", idUser1)
                     .setParameter("user2", idUser2)

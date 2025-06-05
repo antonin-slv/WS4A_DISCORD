@@ -9,7 +9,9 @@ public class ChannelDAO{
     private static final GenericDBDAO<Channel, Integer> genDAO = new GenericDBDAO<>(Channel.class);
 
     public static Channel find(Integer id) {
-        return genDAO.find(id);
+        Channel chan = genDAO.find(id);
+        chan.setMessages(MessageDAO.findByChannelId(id));
+        return chan;
     }
     public static List<Channel> findAll() {
         return genDAO.findAll();

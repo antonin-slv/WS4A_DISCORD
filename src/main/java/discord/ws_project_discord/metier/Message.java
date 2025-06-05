@@ -33,12 +33,12 @@ public class Message implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_channel")
+    @JoinColumn(name = "id_channel", updatable = false, insertable = false)
     private Channel channel;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_sender", nullable = false)
+    @JoinColumn(name = "id_sender", nullable = false,insertable = false, updatable = false)
     private User sender;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "msg", cascade = CascadeType.ALL)
@@ -47,7 +47,7 @@ public class Message implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.SET_NULL)
-    @JoinColumn(name = "response_to")
+    @JoinColumn(name = "response_to", nullable = true, insertable = false, updatable = false)
     private Message respondsTo;
 
     @Column(name = "response_to")
