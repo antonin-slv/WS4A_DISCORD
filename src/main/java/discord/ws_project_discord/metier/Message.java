@@ -36,11 +36,23 @@ public class Message implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_sender", nullable = false)
-    private User idSender;
+    private User sender;
 
     //reactions
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "msg", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<ReactTo> idReactTo;
+
+    //responds to
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    @JoinColumn(name = "response_to")
+    private Message respondsTo;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "respondsTo", cascade = CascadeType.ALL)
+    private List<Message> responses;
+
+    @Column(name = "id_receiver")
+    private Integer idReceiver;
 
 }
