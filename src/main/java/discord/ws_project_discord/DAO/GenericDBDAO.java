@@ -91,4 +91,16 @@ public class GenericDBDAO<T extends Serializable, ID extends Serializable> {
             em.close();
         }
     }
+
+    protected List<T> findByField(String field, Object value) {
+        try (EntityManager em = getEM()) {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<T> cq = cb.createQuery(entityClass);
+            Root<T> root = cq.from(entityClass);
+            cq.select(root).where(cb.equal(root.get(field), value));
+            TypedQuery<T> query = em.createQuery(cq);
+            List<T> results = query.getResultList();
+            return results;
+        }
+    }
 }
