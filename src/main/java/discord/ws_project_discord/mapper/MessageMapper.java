@@ -12,6 +12,7 @@ public class MessageMapper {
         MessageDTO dto = new MessageDTO();
         dto.setId(msg.getId());
         dto.setAuthorName(msg.getSender().getLogin());
+        dto.setAuthorId(msg.getIdSender());
         dto.setContent(msg.getContent());
         dto.setSendDate(msg.getSendDate());
 

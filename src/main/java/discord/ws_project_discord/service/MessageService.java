@@ -5,11 +5,19 @@ import discord.ws_project_discord.DTO.MessageDTO;
 import discord.ws_project_discord.mapper.MessageMapper;
 import discord.ws_project_discord.metier.Message;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class MessageService {
 
     public static void sendMessage(MessageDTO messageDTO) {
         Message msg = MessageMapper.toEntity(messageDTO);
         //TODO verifier que tout est ok
         MessageDAO.create(msg);
+    }
+
+    public static List<MessageDTO> getMessagesBetweenUsers(int curentUserId, int otherUserId) {
+        List<Message> messages = MessageDAO.findDM(curentUserId, otherUserId);
+        return messages.stream().map(MessageMapper::toDTO).collect(Collectors.toList());
     }
 }

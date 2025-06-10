@@ -1,10 +1,10 @@
-package discord.ws_project_discord.Controller;
-
+package discord.ws_project_discord.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import discord.ws_project_discord.DTO.SubjectDTO;
-import discord.ws_project_discord.service.SubjectService;
+import discord.ws_project_discord.DTO.PrivConvDTO;
+import discord.ws_project_discord.service.MessageService;
+import discord.ws_project_discord.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -12,18 +12,29 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.util.List;
 
-@WebServlet("/subject/*")
-public class ControllerSubject extends HttpServlet {
-
+@WebServlet("/privConv/*")
+public class ControllerPrivConv extends HttpServlet {
     ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        List<SubjectDTO> subjectDTOList = SubjectService.getAllSubjects();
-        response.setContentType("application/json;charset=UTF-8");
-        response.getWriter().println(objectMapper.writeValueAsString(subjectDTOList));
+        String[] tab = request.getPathInfo().split("/");
+        if (tab.length != 3) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().println("Invalid request format. Expected format: /privConv/{userId}");
+            return;
+        }
+        int curentUserId = Integer.parseInt(tab[1]);
+        int otherUserId = Integer.parseInt(tab[2]);
+        PrivConvDTO privConvDTO = new PrivConvDTO();
+        privConvDTO.setCurentUser(UserService.getUserById(curentUserId));
+        privConvDTO.setOtherUser(UserService.getUserById(otherUserId));
+        privConvDTO.setMessages(
+                MessageService.getMessagesBetweenUsers(curentUserId, otherUserId)
+        );
+
+        response.getWriter().println(objectMapper.writeValueAsString(privConvDTO));
     }
 
     @Override
