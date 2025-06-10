@@ -27,6 +27,7 @@ public class GenericDBDAO<T extends Serializable, ID extends Serializable> {
         try {
             tx.begin();
             em.persist(entity);
+            em.flush();
             tx.commit();
         } catch (Exception e) {
             if (tx.isActive()) tx.rollback();

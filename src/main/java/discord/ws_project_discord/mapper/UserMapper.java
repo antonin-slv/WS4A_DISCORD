@@ -17,6 +17,24 @@ public class UserMapper {
         return dto;
     }
 
+    public static UserDTO toDTO(User user) {
+        if (user == null) {
+            return null;
+        }
+        byte[] password;
+        try {
+            password = user.getPwd();
+        } catch (IllegalArgumentException e) {
+            password = null; // Handle the case where password is not set or is invalid
+        }
+        return new UserDTO(
+                user.getId(),
+                user.getEmail(),
+                user.getLogin(),
+                password
+        );
+    }
+
     public static User toEntity(UserDTO dto) {
         if (dto == null) {
             return null;

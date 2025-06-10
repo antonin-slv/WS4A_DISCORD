@@ -13,7 +13,7 @@ public class MessageDAO {
 
     public static List<Message> findByChannelId(Integer channelID) {
         try(EntityManager em = GenericDBDAO.getEM()) {
-            String sql = "SELECT m FROM Message m WHERE m.channel.id = :channelID";
+            String sql = "SELECT m FROM Message m WHERE m.channel.id = :channelID ORDER BY m.sendDate DESC";
             return em.createQuery(sql, Message.class)
                     .setParameter("channelID", channelID)
                     .getResultList();

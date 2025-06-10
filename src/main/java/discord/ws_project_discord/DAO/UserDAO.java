@@ -1,12 +1,16 @@
 package discord.ws_project_discord.DAO;
 
+import discord.ws_project_discord.ApplicationListener;
 import discord.ws_project_discord.metier.User;
 
+import java.security.MessageDigest;
 import java.util.List;
 
 public class UserDAO {
 
     private static final GenericDBDAO<User, Integer> genDAO = new GenericDBDAO<>(User.class);
+
+    private static final MessageDigest messageDigest = ApplicationListener.getMessageDigest();
 
     public static User find(Integer id) {
         return genDAO.find(id);
@@ -24,6 +28,10 @@ public class UserDAO {
 
     public static void create(User user) {
         genDAO.create(user);
+    }
+
+    public static byte[] hashPassword(byte[] password) {
+        return messageDigest.digest(password);
     }
 
     public static void delete(Integer id) {
