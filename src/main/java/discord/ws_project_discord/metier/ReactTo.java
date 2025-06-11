@@ -6,24 +6,18 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @Entity
 @Table(name = "react_to")
-public class ReactTo {
+public class ReactTo implements Serializable {
+
     @EmbeddedId
     private ReactToId id;
 
-    @MapsId("idUser")
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "id_user", nullable = false, insertable = false, updatable = false)
-    private User user;
-
-    @Column(name = "id_user")
-    private Integer idUser;
-
-    @MapsId("idMsg")
+    // message only for consultation
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "id_msg", nullable = false, insertable = false, updatable = false)

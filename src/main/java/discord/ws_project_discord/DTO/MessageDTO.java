@@ -20,5 +20,5 @@ public class MessageDTO implements java.io.Serializable {
     Integer receiverId;
 
     Integer respondsToId;
-    List<ReactionLightDTO> reactions;
+    List<ReactionDTO> reactions;
 }
