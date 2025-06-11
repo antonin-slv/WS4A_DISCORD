@@ -10,6 +10,7 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 @WebFilter("/*")
 public class CorsFilter implements Filter {
@@ -28,6 +29,12 @@ public class CorsFilter implements Filter {
         httpResponse.setHeader("Access-Control-Allow-Headers", "origin, content-type, accept, authorization");
         httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
         httpResponse.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+
+        if (Objects.equals(((HttpServletRequest) request).getMethod(), "OPTIONS")) {
+            // Handle CORS preflight requests
+            httpResponse.setStatus(HttpServletResponse.SC_OK);
+            return; // Indicating that the request should be filtered out
+        }
 
         if (ValidTokenService.isFiltered((HttpServletRequest) request, httpResponse)) {
             return;

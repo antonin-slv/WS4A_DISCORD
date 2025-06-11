@@ -18,6 +18,8 @@ public class ValidTokenService {
             return false; // Do not filter requests to the AuthServer verify endpoint
         }
 
+
+
         String authToken = request.getHeader("Authorization");
 
         if (authToken == null) {
