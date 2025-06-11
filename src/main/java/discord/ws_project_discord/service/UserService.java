@@ -11,6 +11,16 @@ import java.util.List;
 public class UserService {
     public static UserDTO getUserById(int id) {
         User user = UserDAO.find(id);
+        if (user == null) {
+            throw new NotFoundException("User with ID " + id + " does not exist");
+        }
+        return UserMapper.toDTO(user);
+    }
+    public static UserDTO getUserByUsername(String username) {
+        User user = UserDAO.findByLogin(username);
+        if (user == null) {
+            throw new NotFoundException("User with username " + username + " does not exist");
+        }
         return UserMapper.toDTO(user);
     }
 

@@ -31,18 +31,23 @@ public class ControllerUser extends HttpServlet {
             return;
         } else if (tab.length == 2) {
             int userId;
-            try {
-                userId = Integer.parseInt(tab[1]);
-            } catch (NumberFormatException e) {
-                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                response.getWriter().println("Invalid user ID format");
-                return;
-            }
 
-            UserDTO userDTO = UserService.getUserById(userId);
-            if (userDTO == null) {
+            UserDTO userDTO;
+
+            try {
+                try {
+                    userId = Integer.parseInt(tab[1]);
+                    userDTO = UserService.getUserById(userId);
+                } catch (NumberFormatException e) {
+                    userDTO = UserService.getUserByUsername(tab[1]);
+                }
+            } catch (NotFoundException e) {
                 response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                response.getWriter().println("User not found");
+                response.getWriter().println(e.getMessage());
+                return;
+            } catch (Exception e) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.getWriter().println(e.getMessage());
                 return;
             }
             response.getWriter().println(objectMapper.writeValueAsString(userDTO));

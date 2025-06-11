@@ -20,10 +20,10 @@ public class UserDAO {
         return genDAO.findAll();
     }
     public static User findByLogin(String login) {
-        return genDAO.findByField("login", login).getFirst();
+        return genDAO.findByField("login", login).stream().findFirst().orElse(null);
     }
     public static User findByEmail(String email) {
-        return genDAO.findByField("email", email).getFirst();
+        return genDAO.findByField("email", email).stream().findFirst().orElse(null);
     }
 
     public static void create(User user) {
