@@ -8,7 +8,8 @@ CREATE TABLE Users (
 CREATE TABLE Subject
 (
     id_sub  SERIAL PRIMARY KEY,
-    subject TEXT NOT NULL
+    subject TEXT NOT NULL,
+    is_public BOOLEAN NOT NULL
 );
 
 CREATE TABLE Channel

@@ -7,11 +7,11 @@ VALUES
 
 TRUNCATE Subject CASCADE;
 ALTER SEQUENCE subject_id_sub_seq RESTART WITH 1;
-INSERT INTO Subject (subject)
+INSERT INTO Subject (subject, is_public)
 VALUES
-    ('General'),
-    ('Annonces'),
-    ('Support');
+    ('General', TRUE),
+    ('Annonces', TRUE),
+    ('Support', FALSE);
 
 TRUNCATE channel CASCADE;
 ALTER SEQUENCE channel_id_chan_seq RESTART WITH 1;

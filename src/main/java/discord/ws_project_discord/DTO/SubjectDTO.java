@@ -10,8 +10,9 @@ import java.util.List;
 public class SubjectDTO implements java.io.Serializable {
 
     Integer id;
-
     String name;
+    Boolean isPublic;
+
     List<ChannelLightDTO> channels;
     List<UserInSubjectDTO> users;
 }

@@ -12,6 +12,7 @@ public class SubjectMapper {
         SubjectDTO dto = new SubjectDTO();
         dto.setId(suj.getId());
         dto.setName(suj.getSubject());
+        dto.setIsPublic(suj.getIsPublic());
         dto.setChannels(
                 suj.getChannels()
                         .stream()
@@ -37,6 +38,7 @@ public class SubjectMapper {
         Subject suj = new Subject();
         suj.setId(dto.getId());
         suj.setSubject(dto.getName());
+        suj.setIsPublic(dto.getIsPublic());
         suj.setChannels(
                 dto.getChannels()
                         .stream()

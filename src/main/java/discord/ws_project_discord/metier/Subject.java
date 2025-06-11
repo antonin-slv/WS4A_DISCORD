@@ -21,6 +21,10 @@ public class Subject implements Serializable {
     @Column(name = "subject", nullable = false, length = Integer.MAX_VALUE)
     private String subject;
 
+    @NotNull
+    @Column(name = "is_public" , nullable = false)
+    private Boolean isPublic;
+
     //make shure to load all the channels and invites when loading a subject
     @OneToMany(
             mappedBy = "subject",
