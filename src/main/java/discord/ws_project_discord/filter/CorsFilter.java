@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -27,6 +28,10 @@ public class CorsFilter implements Filter {
         httpResponse.setHeader("Access-Control-Allow-Headers", "origin, content-type, accept, authorization");
         httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
         httpResponse.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+
+        if (ValidTokenService.isFiltered((HttpServletRequest) request, httpResponse)) {
+            return;
+        }
 
         chain.doFilter(request, response);
     }

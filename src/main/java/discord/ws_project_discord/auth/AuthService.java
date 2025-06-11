@@ -1,8 +1,9 @@
-package discord.ws_project_discord.service;
+package discord.ws_project_discord.auth;
 
 import discord.ws_project_discord.ApplicationListener;
 import discord.ws_project_discord.DAO.UserDAO;
 import discord.ws_project_discord.metier.User;
+import discord.ws_project_discord.service.AuthInfo;
 
 import javax.crypto.Mac;
 import java.util.Arrays;
@@ -12,22 +13,21 @@ import java.util.Map;
 public class AuthService {
 
 
-    static Map<String,AuthInfo> tokens = new HashMap<>();
+    static Map<String, AuthInfo> tokens = new HashMap<>();
 
+    static long lastCleanTime = System.currentTimeMillis();
 
     public static void cleanExpiredTokens() {
-        // Clean expired tokens
+        // Clean expired tokens if needed
         long currentTime = System.currentTimeMillis();
-        tokens.entrySet().removeIf(entry -> entry.getValue().getExpirationDate() < currentTime);
-    }
-
-
-    public static AuthInfo getAuthInfo(String token) {
-        // Retrieve the AuthInfo for the given token
-        return tokens.get(token);
+        if (currentTime - lastCleanTime > 10000) { // Clean every 10 sec
+            tokens.entrySet().removeIf(entry -> entry.getValue().getExpirationDate() < currentTime);
+            lastCleanTime = currentTime;
+        }
     }
 
     public static boolean tokenExists(String token) {
+        cleanExpiredTokens();
         // Check if the token exists
         return tokens.containsKey(token);
     }
@@ -43,11 +43,11 @@ public class AuthService {
             // create a token (for simplicity, we just return the user ID as a string)
 
             String innerToken = String.valueOf(user.getId());
-            String token = "Bearer" + innerToken;
+            String token = "Bearer " + innerToken;
             AuthInfo authInfo = new AuthInfo();
             authInfo.setUserId(user.getId());
-            authInfo.setExpirationDate(System.currentTimeMillis() + 3600000); // 1 hour expiration
-            tokens.put(innerToken, authInfo);
+            authInfo.setExpirationDate(System.currentTimeMillis() + 3_600_000); // 1 hour expiration
+            tokens.put(token, authInfo);
             return token;
 
         } else {

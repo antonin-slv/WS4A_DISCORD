@@ -1,11 +1,6 @@
-package discord.ws_project_discord.controller;
+package discord.ws_project_discord.auth;
 
-import discord.ws_project_discord.service.AuthService;
-import discord.ws_project_discord.service.UserService;
-import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.ServletRequest;
-import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Base64;
 
-@WebServlet("/connect")
+@WebServlet("/AuthServer/*")
 public class ControllerConnexion extends HttpServlet {
 
     @Override
@@ -28,9 +23,42 @@ public class ControllerConnexion extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_OK);
             return;
         }
+        String pinf = request.getPathInfo();
+        if (pinf == null || pinf.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("Invalid request format");
+            return;
+        }
+        String[] pathInfo = pinf.split("/");
+        if (pathInfo.length == 0 || pathInfo[1].isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("Invalid request format");
+            return;
+        }
+        if (pathInfo[1].equals("connect")) {
+            connect(request, response);
+        } else if (pathInfo[1].equals("verify")) {
+            verfiyToken(request, response);
+        } else {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            response.getWriter().write("Endpoint not found");
+        }
 
+    }
+    private void verfiyToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String token = request.getHeader("Authorization");
+
+        if (AuthService.tokenExists(token)) {
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.getWriter().write("Token is valid");
+        } else {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("Token is invalid");
+        }
+    }
+    public static void connect(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorization = request.getHeader("Authorization");
-        String token = connect(authorization);
+        String token = getTokenFromAuth(authorization);
         if (token.isEmpty()) {
             response.setHeader("WWW-Authenticate", "Basic realm=\"Veuillez saisir votre login/mot de passe\"");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -41,10 +69,11 @@ public class ControllerConnexion extends HttpServlet {
 
         response.setContentType("application/json;charset=UTF-8");
         response.getWriter().write("{\"token\":\"" + token + "\"}");
-
     }
 
-    private String connect(String authorization) {
+
+
+    static private String getTokenFromAuth(String authorization) {
         if (authorization == null || !authorization.startsWith("Basic")) return "";
         try {
             String token = authorization.substring("Basic".length()).trim();// Décoder le token
