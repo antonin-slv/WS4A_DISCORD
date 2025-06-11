@@ -18,22 +18,29 @@ import java.util.Base64;
 public class ControllerConnexion extends HttpServlet {
 
     @Override
-    public void service(ServletRequest request, ServletResponse response)
+    public void service(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
-        HttpServletResponse httpResponse = (HttpServletResponse) response;
-        String authorization = httpRequest.getHeader("Authorization");
-        String token = connect(authorization);
-        if (token.isEmpty()) {
-            httpResponse.setHeader("WWW-Authenticate", "Basic realm=\"Veuillez saisir votre login/mot de passe\"");
-            httpResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            httpResponse.setContentType("text/plain;charset=UTF-8");
-            httpResponse.getWriter().write("Invalid credentials");
+
+        if(request.getMethod().equals("OPTIONS")){
+            response.setHeader("Access-Control-Allow-Origin", "http://localhost:4200");
+            response.setHeader("Access-Control-Allow-Headers", "origin, content-type, accept, authorization");
+            response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+            response.setStatus(HttpServletResponse.SC_OK);
             return;
         }
 
-        httpResponse.setContentType("application/json;charset=UTF-8");
-        httpResponse.getWriter().write("{\"token\":\"" + token + "\"}");
+        String authorization = request.getHeader("Authorization");
+        String token = connect(authorization);
+        if (token.isEmpty()) {
+            response.setHeader("WWW-Authenticate", "Basic realm=\"Veuillez saisir votre login/mot de passe\"");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("text/plain;charset=UTF-8");
+            response.getWriter().write("Invalid credentials");
+            return;
+        }
+
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().write("{\"token\":\"" + token + "\"}");
 
     }
 

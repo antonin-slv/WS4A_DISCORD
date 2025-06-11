@@ -33,7 +33,7 @@ public class MessageDAO {
                     """
                         SELECT m FROM Message m
                         WHERE (m.sender.id = :user1 AND m.idReceiver = :user2)
-                        OR (m.sender.id = :user2 AND m.idReceiver = :user1)
+                        OR (m.sender.id = :user2 AND m.idReceiver = :user1) ORDER BY m.sendDate DESC
                     """;
             return em.createQuery(sql, Message.class)
                     .setParameter("user1", idUser1)
