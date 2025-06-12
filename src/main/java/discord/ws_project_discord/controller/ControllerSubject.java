@@ -55,6 +55,22 @@ public class ControllerSubject extends HttpServlet {
 
     @Override
     public void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //TODO
+        String pInf = request.getPathInfo();
+        String[] tab = (pInf != null && !pInf.isEmpty()) ? pInf.split("/") : new String[0];
+
+        if (tab.length == 2) {
+            int subjectId;
+            try {
+                subjectId = Integer.parseInt(tab[1]);
+                SubjectService.deleteSubject(subjectId);
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            } catch (NumberFormatException e) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid subject ID format");
+            } catch (Exception e) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Subject not found");
+            }
+        } else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid request format");
+        }
     }
 }

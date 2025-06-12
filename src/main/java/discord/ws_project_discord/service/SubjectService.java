@@ -30,4 +30,8 @@ public class SubjectService {
         Subject subject = SubjectMapper.toEntity(subjectDTO);
         SubjectDAO.update(subject);
     }
+
+    public static void deleteSubject(int id) {
+        SubjectDAO.delete(id);
+    }
 }
