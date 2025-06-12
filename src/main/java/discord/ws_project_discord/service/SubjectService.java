@@ -24,7 +24,10 @@ public class SubjectService {
         Subject subject = SubjectMapper.toEntity(subjectDTO);
         SubjectDAO.create(subject);
         return SubjectMapper.toDTO(subject);
+    }
 
-
+    public static void updateSubject(SubjectDTO subjectDTO) {
+        Subject subject = SubjectMapper.toEntity(subjectDTO);
+        SubjectDAO.update(subject);
     }
 }

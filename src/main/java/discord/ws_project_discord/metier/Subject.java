@@ -33,7 +33,10 @@ public class Subject implements Serializable {
 
     @OneToMany(
             mappedBy = "subject",
-            fetch = FetchType.EAGER)
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL, // Ajoute cette ligne
+            orphanRemoval = true       // Permet la suppression des orphelins
+    )
     private List<UserInSubject> userInSubjects;
 
 }

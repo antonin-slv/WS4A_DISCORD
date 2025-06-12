@@ -21,4 +21,6 @@ public class SubjectDAO {
     public static void delete(Integer id) {
         genDAO.delete(id);
     }
+
+    public static void update(Subject subject) {genDAO.update(subject);}
 }

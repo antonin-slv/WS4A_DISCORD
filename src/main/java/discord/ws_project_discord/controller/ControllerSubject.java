@@ -46,7 +46,9 @@ public class ControllerSubject extends HttpServlet {
 
     @Override
     public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //TODO
+        SubjectDTO subjectDTO = objectMapper.readValue(request.getInputStream(), SubjectDTO.class);
+        SubjectService.updateSubject(subjectDTO);
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override

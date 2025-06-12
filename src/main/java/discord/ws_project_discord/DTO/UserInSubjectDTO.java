@@ -13,6 +13,5 @@ import java.io.Serializable;
 public class UserInSubjectDTO implements Serializable {
     Integer idUser;
     Integer idSubject;
-    String login;
     Boolean isAdmin;
 }

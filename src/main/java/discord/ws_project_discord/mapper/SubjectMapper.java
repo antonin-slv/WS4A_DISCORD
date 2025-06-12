@@ -49,6 +49,7 @@ public class SubjectMapper {
                 dto.getUsers()
                         .stream()
                         .map(UserInSubjectMapper::toEntity)
+                        .peek(uis -> uis.setSubject(suj))
                         .toList()
         );
         return suj;

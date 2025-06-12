@@ -53,7 +53,6 @@ public class UserMapper {
         }
         User user = new User();
         user.setId(dto.getIdUser());
-        user.setLogin(dto.getLogin());
         return user;
     }
 }

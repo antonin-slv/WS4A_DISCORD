@@ -16,7 +16,6 @@ public class UserInSubjectMapper {
 
         User user = new User();
         user.setId(dto.getIdUser());
-        user.setLogin(dto.getLogin());
         userInSubject.setUser(user);
 
         Subject subject = new Subject();
