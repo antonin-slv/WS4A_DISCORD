@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 
 @WebServlet("/subject/*")
@@ -22,6 +23,7 @@ public class ControllerSubject extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         List<SubjectDTO> subjectDTOList = SubjectService.getAllSubjects();
+        subjectDTOList = subjectDTOList.stream().sorted(Comparator.comparing(SubjectDTO::getId)).toList();
         response.setContentType("application/json;charset=UTF-8");
         response.getWriter().println(objectMapper.writeValueAsString(subjectDTOList));
     }
