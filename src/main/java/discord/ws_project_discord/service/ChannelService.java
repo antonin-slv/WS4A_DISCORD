@@ -27,4 +27,8 @@ public class ChannelService {
         Channel chan = ChannelMapper.toEntity(dto);
         ChannelDAO.create(chan);
     }
+
+    public static void deleteChannel(int channelId) {
+        ChannelDAO.delete(channelId);
+    }
 }

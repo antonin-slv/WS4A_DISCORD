@@ -70,6 +70,21 @@ public class ControllerChannel extends HttpServlet {
 
     @Override
     public void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //TODO
+        String[] tab = request.getPathInfo().split("/");
+        if (tab.length == 2) {
+            int channelId;
+            try {
+                channelId = Integer.parseInt(tab[1]);
+            } catch (NumberFormatException e) {
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.getWriter().println("Invalid channel ID");
+                return;
+            }
+            ChannelService.deleteChannel(channelId);
+            response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        } else {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().println("Invalid request format");
+        }
     }
 }
