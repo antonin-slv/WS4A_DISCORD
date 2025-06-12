@@ -23,9 +23,8 @@ public class ChannelService {
         return ChannelMapper.toDTO(chan);
     }
 
-    public static ChannelLightDTO createChannel(ChannelLightDTO dto) {
+    public static void createChannel(ChannelLightDTO dto) {
         Channel chan = ChannelMapper.toEntity(dto);
         ChannelDAO.create(chan);
-        return ChannelMapper.toLightDTO(chan);
     }
 }

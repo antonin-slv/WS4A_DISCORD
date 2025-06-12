@@ -3,6 +3,7 @@ package discord.ws_project_discord.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import discord.ws_project_discord.DTO.ChannelDTO;
+import discord.ws_project_discord.DTO.ChannelLightDTO;
 import discord.ws_project_discord.service.ChannelService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -57,7 +58,9 @@ public class ControllerChannel extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //TODO
+        ChannelLightDTO channelLightDTO = objectMapper.readValue(request.getInputStream(), ChannelLightDTO.class);
+        ChannelService.createChannel(channelLightDTO);
+        response.setStatus(HttpServletResponse.SC_CREATED);
     }
 
     @Override
