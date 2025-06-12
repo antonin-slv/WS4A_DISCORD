@@ -2,6 +2,7 @@ package discord.ws_project_discord.metier;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @Table(name = "subject")
 public class Subject implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_sub", nullable = false)
     private Integer id;
 

@@ -1,6 +1,8 @@
 package discord.ws_project_discord.DAO;
 
 import discord.ws_project_discord.metier.Subject;
+import discord.ws_project_discord.metier.UserInSubject;
+import discord.ws_project_discord.metier.UserInSubjectId;
 
 import java.util.List;
 
@@ -15,7 +17,19 @@ public class SubjectDAO {
     }
 
     public static void create(Subject subject) {
+        List<UserInSubject> users = subject.getUserInSubjects();
+        subject.setUserInSubjects(null); // Avoid circular reference during creation
         genDAO.create(subject);
+        if (users != null) {
+            for (UserInSubject userInSubject : users) {
+                UserInSubjectId userInSubjectId = new UserInSubjectId();
+                userInSubjectId.setIdUser(userInSubject.getUser().getId());
+                userInSubjectId.setIdSub(subject.getId());
+                userInSubject.setId(userInSubjectId);
+            }
+        }
+        subject.setUserInSubjects(users); // Restore the user list after creation
+        genDAO.update(subject);
     }
 
     public static void delete(Integer id) {

@@ -43,7 +43,15 @@ public class ControllerSubject extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //TODO
+        if (request.getContentType() == null || !request.getContentType().contains("application/json")) {
+            response.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, "Content-Type must be application/json");
+            return;
+        }
+        SubjectDTO subjectDTO = objectMapper.readValue(request.getInputStream(), SubjectDTO.class);
+        SubjectService.createSubject(subjectDTO);
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().println(objectMapper.writeValueAsString(subjectDTO));
+        response.setStatus(HttpServletResponse.SC_CREATED);
     }
 
     @Override
