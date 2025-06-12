@@ -2,6 +2,7 @@ package discord.ws_project_discord.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import discord.ws_project_discord.DAO.MessageDAO;
 import discord.ws_project_discord.DTO.MessageDTO;
 import discord.ws_project_discord.service.MessageService;
 import jakarta.servlet.ServletException;
@@ -19,7 +20,26 @@ public class ControllerMessage extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String pInf = request.getPathInfo();
+        String[] tab = (pInf != null && !pInf.isEmpty()) ? pInf.split("/") : new String[0];
+        response.setContentType("application/json;charset=UTF-8");
 
+        if (tab.length == 2) {
+            try {
+                Integer messageId = Integer.parseInt(tab[1]);
+                MessageDTO messageDTO = MessageService.findMessageById(messageId);
+                response.getWriter().println(objectMapper.writeValueAsString(messageDTO));
+                return;
+            } catch (NumberFormatException e) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid message ID format");
+                return;
+            } catch (Exception e) {
+                response.sendError(HttpServletResponse.SC_NOT_FOUND, "Message not found");
+                return;
+            }
+        }
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        response.getWriter().println("Too many parameters provided or invalid request format");
     }
 
     @Override
@@ -58,6 +78,21 @@ public class ControllerMessage extends HttpServlet {
 
     @Override
     public void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //TODO
+        String pInf = request.getPathInfo();
+        String[] tab = (pInf != null && !pInf.isEmpty()) ? pInf.split("/") : new String[0];
+
+        if (tab.length == 2) {
+            try {
+                int messageId = Integer.parseInt(tab[1]);
+                MessageDAO.delete(messageId);
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            } catch (NumberFormatException e) {
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid message ID format");
+            } catch (Exception e) {
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error deleting message: " + e.getMessage());
+            }
+        } else {
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid request format");
+        }
     }
 }

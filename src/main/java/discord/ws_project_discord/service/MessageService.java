@@ -10,6 +10,15 @@ import java.util.stream.Collectors;
 
 public class MessageService {
 
+
+    public static MessageDTO findMessageById(Integer id) {
+        Message msg = MessageDAO.find(id);
+        if (msg == null) {
+            throw new RuntimeException("Message not found with ID: " + id);
+        }
+        return MessageMapper.toDTO(msg);
+    }
+
     public static void sendMessage(MessageDTO messageDTO) {
         Message msg = MessageMapper.toEntity(messageDTO);
         //TODO verifier que tout est ok

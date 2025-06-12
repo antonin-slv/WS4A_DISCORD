@@ -12,7 +12,6 @@ public class ReactionDAO {
         return genDAO.find(id);
     }
 
-
     public  static void create(ReactTo reactTo) {
         genDAO.create(reactTo);
     }

@@ -56,7 +56,7 @@ public class ControlleurReaction extends HttpServlet {
             return;
         }
         String[] tab = pInf.split("/");
-        if (tab.length != 3) {
+        if (tab.length != 4) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid reaction format");
             return;
         } else  {
@@ -64,8 +64,8 @@ public class ControlleurReaction extends HttpServlet {
             int msgId;
 
             try {
-                userId = Integer.parseInt(tab[1]);
-                msgId = Integer.parseInt(tab[2]);
+                userId = Integer.parseInt(tab[2]);
+                msgId = Integer.parseInt(tab[3]);
             } catch (NumberFormatException e) {
                 response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid user or message ID");
                 return;
