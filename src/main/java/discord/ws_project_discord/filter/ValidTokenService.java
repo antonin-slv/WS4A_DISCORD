@@ -16,6 +16,8 @@ public class ValidTokenService {
         String pathInfo = request.getRequestURL().toString();
         if ( pathInfo.contains("/AuthServer/verify") || pathInfo.contains("/AuthServer/connect")) {
             return false; // Do not filter requests to the AuthServer verify endpoint
+        } else if ((pathInfo.endsWith("/user") || pathInfo.endsWith("/user/")) && request.getMethod().equals("POST")) {
+            return false; // Do not filter requests to the user creation endpoint
         }
 
 
