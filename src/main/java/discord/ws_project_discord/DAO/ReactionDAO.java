@@ -16,6 +16,10 @@ public class ReactionDAO {
         genDAO.create(reactTo);
     }
 
+    public static void update(ReactTo reactTo) throws Exception {
+        genDAO.update(reactTo);
+    }
+
     public static void delete(ReactToId id) {
         genDAO.delete(id);
     }

@@ -23,12 +23,14 @@ public class ControlleurReaction extends HttpServlet {
 
     @Override
     public void service(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
-        if (req.getMethod().equalsIgnoreCase("POST")) {
-            doPost(req, res);
-        } else if (req.getMethod().equalsIgnoreCase("DELETE")) {
-            doDelete(req, res);
-        } else {
-            res.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Method not allowed");
+
+        String meth = req.getMethod().toUpperCase();
+
+        switch (meth) {
+            case "POST" -> doPost(req, res);
+            case "DELETE" -> doDelete(req, res);
+            case "PUT" -> doPatch(req, res);
+            default -> res.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "Method not allowed");
         }
     }
 
@@ -46,6 +48,21 @@ public class ControlleurReaction extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         response.getWriter().println(objectMapper.writeValueAsString(reactToDTO));
         response.setStatus(HttpServletResponse.SC_CREATED);
+    }
+
+    public void doPatch(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ReactionDTO reactToDTO = objectMapper.readValue(request.getInputStream(), ReactionDTO.class);
+        ReactTo reactTo = ReactionMapper.toEntity(reactToDTO);
+        try {
+            ReactionDAO.update(reactTo);
+        } catch (Exception e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND, "Reaction not found");
+            return;
+        }
+
+        response.setContentType("application/json;charset=UTF-8");
+        response.getWriter().println(objectMapper.writeValueAsString(reactToDTO));
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override

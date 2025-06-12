@@ -29,6 +29,24 @@ public class MessageMapper {
         return dto;
     }
 
+    public static Message majMessageWithDTO(Message msg, MessageDTO messageDTO) {
+        if (msg == null || messageDTO == null) {
+            return msg;
+        }
+        if (messageDTO.getContent() != null) {
+            msg.setContent(messageDTO.getContent());
+        }
+        if (messageDTO.getReactions() != null) {
+            msg.setReactTo(
+                    messageDTO.getReactions()
+                            .stream()
+                            .map(ReactionMapper::toEntity)
+                            .toList()
+            );
+        }
+        return msg;
+    }
+
     public static Message toEntity(MessageDTO messageDTO) {
         if (messageDTO == null) {
             return null;

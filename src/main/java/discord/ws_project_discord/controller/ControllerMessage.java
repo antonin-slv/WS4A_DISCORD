@@ -52,7 +52,16 @@ public class ControllerMessage extends HttpServlet {
     }
 
     public void doPatch(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //TODO
+        if (request.getContentType() == null || !request.getContentType().contains("application/json")) {
+            response.sendError(HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE, "Content-Type must be application/json");
+            return;
+        }
+        MessageDTO messageDTO = objectMapper.readValue(request.getInputStream(), MessageDTO.class);
+        messageDTO = MessageService.updateMesssage(messageDTO);
+
+        response.getWriter().println(objectMapper.writeValueAsString(messageDTO));
+        response.setContentType("application/json;charset=UTF-8");
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override
@@ -73,7 +82,7 @@ public class ControllerMessage extends HttpServlet {
 
     @Override
     public void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        //TODO
+        response.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED, "PUT method is not supported for this endpoint");
     }
 
     @Override

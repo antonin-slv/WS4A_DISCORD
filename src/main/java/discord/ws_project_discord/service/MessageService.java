@@ -19,6 +19,16 @@ public class MessageService {
         return MessageMapper.toDTO(msg);
     }
 
+    public static MessageDTO updateMesssage(MessageDTO messageDTO) {
+        Message msg = MessageMapper.majMessageWithDTO(MessageDAO.find(messageDTO.getId()), messageDTO);
+        try {
+            MessageDAO.update(msg);
+        } catch (Exception e) {
+            throw new RuntimeException("Error updating message: " + e.getMessage());
+        }
+        return MessageMapper.toDTO(msg);
+    }
+
     public static void sendMessage(MessageDTO messageDTO) {
         Message msg = MessageMapper.toEntity(messageDTO);
         //TODO verifier que tout est ok
